@@ -26,23 +26,10 @@ int main() {
 
     vector<Point> points(Point::fillVectorRandom(nrPoints, minX, maxX, minY, maxY));
 
-    //test 2: orientation
-    //cout << "Test: " << Point::orientation(p1,p2,p4) << " should be equal to " << Point::ORIENTATION_COLINEAR << endl;
-    //cout << "Test: " << Point::orientation(p1,p2,p3) << " should be equal to " << Point::ORIENTATION_COUNTERCLOCKWISE << endl;
-    //cout << "Test: " << Point::orientation(p3,p2,p1) << " should be equal to " << Point::ORIENTATION_CLOCKWISE << endl;
-    //cout << "Test: " << Point::orientation(p3,p2,p1) << " should be equal to " << Point::ORIENTATION_CLOCKWISE << endl;
-    //cout << "Test: " << Point::orientation(p3,p2,p5) << " should be equal to " << Point::ORIENTATION_COUNTERCLOCKWISE << endl;
-
-    //test 3: method nextToTop()
-    //stack<Point> s;
-    //s.push(p1);
-    //s.push(p2);
-    //s.push(p3);
-    //s.push(p4);
-    //s.push(p5); 
-    //cout << "Test: " << algo.nextToTop()
-
     vector<Point> hull = algo.findConvexHull(points);
+    for( Point p : hull){
+        cout << p;
+    }
     cout << "hull calculated" << endl;
     drawOnScreen(points,hull);
 

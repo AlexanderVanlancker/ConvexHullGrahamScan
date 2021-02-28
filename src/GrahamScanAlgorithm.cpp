@@ -33,6 +33,16 @@ vector<Point> GrahamScanAlgorithm::findConvexHull(vector<Point> &points) const{
 
     //Step2: sort all but first element by polar angle. If two points have same angle, only keep the point with the largest distance.
     std::sort(points.begin()+1, points.end(), comparePolarAngle);
+
+    
+    for(int i=1; i<points.size()-1; i++){
+        if(Point::orientation(p0,points[i],points[i+1]) == Point::ORIENTATION_COLINEAR){
+            if(p0.distSquared(points[i]) < p0.distSquared(points[i+1]))
+                points.erase(points.begin() + i);
+            else
+                points.erase(points.begin() + i+1);
+        }
+    }
     
     //Step3: construct convex hull using method orientation and stack
     std::stack<Point> hull;
@@ -41,10 +51,10 @@ vector<Point> GrahamScanAlgorithm::findConvexHull(vector<Point> &points) const{
     hull.push(points[2]);
 
     for(int i=3;i<points.size();i++){
-        if(Point::orientation(nextToTop(hull),hull.top(),points[i]) == Point::ORIENTATION_CLOCKWISE){
+        while(Point::orientation(nextToTop(hull),hull.top(),points[i]) != Point::ORIENTATION_COUNTERCLOCKWISE){
             hull.pop();
-            i--;
         }
+        hull.push(points[i]);
     }
     
     //Step4: convert into vector and reverse orde so that point with minimum Y-coordinate comes first
